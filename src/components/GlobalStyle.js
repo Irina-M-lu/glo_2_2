@@ -28,9 +28,7 @@ img {
 
 button {
   cursor: pointer;
-  &:hover {
-    color: salmon;
-  }
+
   
 }
 

@@ -25,8 +25,12 @@ aling-items: center;
 `;
 
 const H1 = styled.h1`
-font-size: 24px;
-margin-left: 15px; 
+font-size: 30px;
+margin-left: 30px; 
+&:hover {
+color: lightsalmon;
+transform: scale(1.2);
+}
 `;
 
 const ImgLogo = styled.img `
@@ -39,12 +43,17 @@ height: 30px;
 background-color: transparent;
 border-color: transparent;
 font-size: 16px;
+font-weight: bold;
 color: white;
 right: -50px;
 margin-right: 60px;
+margin-bottom: 30px;
 justify-content: center;
 text-align: center;
-
+&:hover{
+    color: lightsalmon;
+    transform: scale(1.2);
+}
 
 `
 
