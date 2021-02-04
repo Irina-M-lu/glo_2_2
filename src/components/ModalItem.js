@@ -32,28 +32,23 @@ background-position: center;
 margin-bottom: 20px;
 `;
 
-const ModalHeader = styled.div `
-position: relative;
+const ModalContent = styled.section `
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: space-between;
+height: calc(100% - 300px);
+padding: 30px;
+`;
+
+const ModalHeader = styled.div `
+display: flex;
+justify-content: space-between;
+font-size: 24px;
+font-weight: 700;
+font-family: 'Pacifico', cursive;
 align-items: center;
-padding: 0 20px;
-`;
 
-const H1 = styled.h1 `
-font-size: 30px;
-color: black;
 `;
-
-const H2 = styled.h2 `
-position: absolute;
-font-size: 30px;
-color: black;
-right: 10px;
-top: 0;
-`;
-
 
 
 export const ModalItem = ({openItem, setOpenItem}) => {
@@ -72,13 +67,14 @@ if(e.target.id === 'overlay') {
 <Modal>
 
 <Banner img={openItem.img}/>
-<ModalHeader><H1>{openItem.name}</H1>
-    <H2>{openItem.price.toLocaleString('ru-RU',
-{style: 'currency', currency: 'RUB'})}</H2>
+<ModalContent>
+<ModalHeader>
+    <div>{openItem.name}</div>
+    <div>{openItem.price}</div>
 </ModalHeader>
-  <AddButton>
-  <p>Добавить</p>
-  </AddButton>
+<AddButton>Добавить</AddButton>
+  </ModalContent>
+ 
     </Modal>
 </Overlay>
 )};
