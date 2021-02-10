@@ -5,8 +5,9 @@ import {CountItem} from './CountItem';
 import {useCount} from '../Hooks/useCount';
 import { totalPriceItems } from '../Functions/secondaryFunction';
 import {formatCurrency} from '../Functions/secondaryFunction';
-
-
+import {Toppings} from './Toppings';
+import {useToppings} from '../Hooks/useToppings';
+ 
 
 
 
@@ -66,6 +67,7 @@ justify-content: space-between;
 export const ModalItem = ({openItem, setOpenItem, orders, setOrders}) => {
 
 const counter = useCount();
+const toppings = useToppings(openItem);
 
 const closeModal = e => {
 if(e.target.id === 'overlay') {
@@ -75,7 +77,8 @@ if(e.target.id === 'overlay') {
 
 const order = {
    ...openItem,
-   count: counter.count
+   count: counter.count,
+   topping: toppings.toppings
 };
 
 
@@ -100,6 +103,7 @@ setOpenItem(null);
     <div>{formatCurrency(openItem.price)}</div>
 </ModalHeader>
 <CountItem {...counter}/>
+{openItem.toppings && <Toppings {...toppings} />}
 <TotalPriceItem>
     <span>Цена: </span> 
     <span>{formatCurrency(totalPriceItems(order))}</span>
