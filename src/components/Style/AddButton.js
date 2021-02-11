@@ -17,8 +17,12 @@ transition-property: color, background-color, border-color;
 transition-duration: .3s;
 &:hover {
     color: lightsalmon;
-    background-color: #191970;
+    background-color: darkgreen;
     border-color: lightsalmon;
-
+};
+&:disabled {
+    color: #fff;
+    background-color: darkgrey;
+    border-color: #aaa;
 }
 `;

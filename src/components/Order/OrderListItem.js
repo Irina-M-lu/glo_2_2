@@ -39,7 +39,7 @@ font-size: 14px;
 width: 100%;
 `;
 
-        export const OrderListItem = ({ order }) => {
+        export const OrderListItem = ({ order, index, deleteItem }) => {
             const topping = order.topping.filter(item => item.checked)
             .map(item => item.name)
             .join(', ');
@@ -48,10 +48,10 @@ width: 100%;
             
             return (
                 <OrderItemStyled>
-                    <ItemName>{order.name}</ItemName>
+                    <ItemName>{order.name} {order.choice} </ItemName>
                     <span>{order.count}</span>
                     <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
-                    <TrashButton/>
+                    <TrashButton onClick={() => deleteItem(index)} />
                     {topping && <Toppings>Добавки: {topping}</Toppings>}
                 </OrderItemStyled>
       )};
