@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import {AddButton} from '../Style/AddButton';
-import {CountItem} from './CountItem';
-import {useCount} from '../Hooks/useCount';
+import { AddButton } from '../Style/AddButton';
+import { CountItem } from './CountItem';
+import { useCount } from '../Hooks/useCount';
 import { totalPriceItems } from '../Functions/secondaryFunction';
-import {formatCurrency} from '../Functions/secondaryFunction';
-import {Toppings} from './Toppings';
-import {Choices} from './Choices'
+import { formatCurrency } from '../Functions/secondaryFunction';
+import { Toppings } from './Toppings';
+import { Choices } from './Choices'
 
 
-import {useToppings} from '../Hooks/useToppings';
-import {useChoices} from '../Hooks/useChoices';
- 
+import { useToppings } from '../Hooks/useToppings';
+import { useChoices } from '../Hooks/useChoices';
+
 
 
 
@@ -68,59 +68,78 @@ justify-content: space-between;
 `;
 
 
-export const ModalItem = ({openItem, setOpenItem, orders, setOrders}) => {
+export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
-const counter = useCount();
-const toppings = useToppings(openItem);
-const choices = useChoices(openItem);
+        const counter = useCount(openItem.count);
+        const toppings = useToppings(openItem);
+        const choices = useChoices(openItem);
+        const isEdit = openItem.index > -1;
 
-const closeModal = e => {
-if(e.target.id === 'overlay') {
-    setOpenItem(null);
-}
-}
+        const closeModal = e => {
+            if (e.target.id === 'overlay') {
+                setOpenItem(null);
+            }
+        }
 
-const order = {
-   ...openItem,
-   count: counter.count,
-   topping: toppings.toppings,
-   choice: choices.choice,
-};
-
-
+        const order = {
+            ...openItem,
+            count: counter.count,
+            topping: toppings.toppings,
+            choice: choices.choice,
+        };
 
 
-const addToOrder = () => {
-setOrders([...orders, order])
-setOpenItem(null);
+        const editOrder = () => {
+            const newOrders = [...orders];
+            newOrders[openItem.index] = order;
+            setOrders(newOrders);
+        }
 
-};
+        const addToOrder = () => {
+            setOrders([...orders, order])
+            setOpenItem(null);
 
-    return (
-        
-<Overlay id="overlay" onClick={closeModal}>
+        };
 
-<Modal>
+        return (
 
-<Banner img={openItem.img}/>
-<ModalContent>
-<ModalHeader>
-    <div>{openItem.name}</div>
-    <div>{formatCurrency(openItem.price)}</div>
-</ModalHeader>
-<CountItem {...counter}/>
-{openItem.toppings && <Toppings {...toppings} />}
-{openItem.choices && <Choices {...choices} openItem={openItem} />}
-<TotalPriceItem>
-    <span>Цена: </span> 
-    <span>{formatCurrency(totalPriceItems(order))}</span>
-</TotalPriceItem>
-<AddButton 
-onClick={addToOrder}
-disabled={order.choices && !order.choice}
->Добавить</AddButton>
-  </ModalContent>
- 
-    </Modal>
-</Overlay>
-)};
+                <
+                Overlay id = "overlay"
+                onClick = { closeModal } >
+
+                <
+                Modal >
+
+                <
+                Banner img = { openItem.img }
+                /> <
+                ModalContent >
+                <
+                ModalHeader >
+                <
+                div > { openItem.name } < /div> <
+                div > { formatCurrency(openItem.price) } < /div> <
+                /ModalHeader> <
+                CountItem {...counter }
+                /> {
+                    openItem.toppings && < Toppings {...toppings }
+                    />} {
+                        openItem.choices && < Choices {...choices }
+                        openItem = { openItem }
+                        />} <
+                        TotalPriceItem >
+                            <
+                            span > Цена: < /span>  <
+                            span > { formatCurrency(totalPriceItems(order)) } < /span> <
+                            /TotalPriceItem> <
+                            AddButton
+                        onClick = { isEdit ? editOrder : addToOrder }
+                        disabled = { order.choices && !order.choice } >
+                            {isEdit ? 'Редактировать' : 'Добавить'} < /AddButton> <
+                            /ModalContent>
+
+                        <
+                        /Modal> <
+                        /Overlay>
+                    )
+                };

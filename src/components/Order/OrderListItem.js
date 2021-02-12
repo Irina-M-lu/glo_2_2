@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import trashImage from '../../img/trash.svg';
 import { totalPriceItems } from '../Functions/secondaryFunction';
-import {formatCurrency} from '../Functions/secondaryFunction';
+import { formatCurrency } from '../Functions/secondaryFunction';
 
 const OrderItemStyled = styled.li `
 display: flex;
@@ -39,19 +39,37 @@ font-size: 14px;
 width: 100%;
 `;
 
-        export const OrderListItem = ({ order, index, deleteItem }) => {
-            const topping = order.topping.filter(item => item.checked)
+export const OrderListItem = ({ order, index, deleteItem, setOpenItem }) => {
+        const topping = order.topping.filter(item => item.checked)
             .map(item => item.name)
             .join(', ');
 
-            console.log(topping);
-            
-            return (
-                <OrderItemStyled>
-                    <ItemName>{order.name} {order.choice} </ItemName>
-                    <span>{order.count}</span>
-                    <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
-                    <TrashButton onClick={() => deleteItem(index)} />
-                    {topping && <Toppings>Добавки: {topping}</Toppings>}
-                </OrderItemStyled>
-      )};
+        const refDeleteButton = useRef(null);
+
+        return (
+
+            <
+            OrderItemStyled onClick = {
+                (e) => e.target !== refDeleteButton.current && setOpenItem({...order, index })
+            } >
+
+            <
+            ItemName > { order.name } { order.choice } < /ItemName>    
+
+            <
+            span > { order.count } < /span>   <ItemPrice > { formatCurrency(totalPriceItems(order)) } </ItemPrice >
+
+            <
+            TrashButton ref = { refDeleteButton }
+            onClick = {
+                () => deleteItem(index)
+            }
+            /> 
+
+            {
+                topping && < Toppings > Добавки: { topping } < /Toppings >} 
+
+                <
+                /OrderItemStyled>
+            )
+        };
