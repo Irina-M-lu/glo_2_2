@@ -93,6 +93,8 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
             const newOrders = [...orders];
             newOrders[openItem.index] = order;
             setOrders(newOrders);
+            setOpenItem(null);
+
         }
 
         const addToOrder = () => {
@@ -102,44 +104,31 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
         };
 
         return (
+                <Overlay id="overlay" onClick = { closeModal }>
+                <Modal>
 
-                <
-                Overlay id = "overlay"
-                onClick = { closeModal } >
-
-                <
-                Modal >
-
-                <
-                Banner img = { openItem.img }
-                /> <
-                ModalContent >
-                <
-                ModalHeader >
-                <
-                div > { openItem.name } < /div> <
-                div > { formatCurrency(openItem.price) } < /div> <
-                /ModalHeader> <
-                CountItem {...counter }
-                /> {
-                    openItem.toppings && < Toppings {...toppings }
-                    />} {
-                        openItem.choices && < Choices {...choices }
+                <Banner img = { openItem.img }/> 
+                <ModalContent>
+                <ModalHeader>
+                <div> { openItem.name } </div> 
+                <div> { formatCurrency(openItem.price) } </div> 
+                </ModalHeader> 
+                <CountItem {...counter }/> 
+                {openItem.toppings && < Toppings {...toppings }
+                    />} 
+                    {openItem.choices && < Choices {...choices }
                         openItem = { openItem }
-                        />} <
-                        TotalPriceItem >
-                            <
-                            span > Цена: < /span>  <
-                            span > { formatCurrency(totalPriceItems(order)) } < /span> <
-                            /TotalPriceItem> <
-                            AddButton
+                        />} 
+                        <TotalPriceItem>
+                            <span> Цена: </span>  
+                            <span> { formatCurrency(totalPriceItems(order)) } </span> 
+                            </TotalPriceItem> 
+                            <AddButton
                         onClick = { isEdit ? editOrder : addToOrder }
                         disabled = { order.choices && !order.choice } >
-                            {isEdit ? 'Редактировать' : 'Добавить'} < /AddButton> <
-                            /ModalContent>
-
-                        <
-                        /Modal> <
-                        /Overlay>
+                            {isEdit ? 'Редактировать' : 'Добавить'} </AddButton> 
+                            </ModalContent>
+            </Modal> 
+                        </Overlay>
                     )
                 };

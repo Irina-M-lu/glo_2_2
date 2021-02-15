@@ -48,28 +48,23 @@ export const OrderListItem = ({ order, index, deleteItem, setOpenItem }) => {
 
         return (
 
-            <
-            OrderItemStyled onClick = {
+            <OrderItemStyled onClick = {
                 (e) => e.target !== refDeleteButton.current && setOpenItem({...order, index })
             } >
 
-            <
-            ItemName > { order.name } { order.choice } < /ItemName>    
+            <ItemName > { order.name } { order.choice } </ItemName>    
 
-            <
-            span > { order.count } < /span>   <ItemPrice > { formatCurrency(totalPriceItems(order)) } </ItemPrice >
+            <span> { order.count } </span>   
+            <ItemPrice > { formatCurrency(totalPriceItems(order)) } </ItemPrice >
 
-            <
-            TrashButton ref = { refDeleteButton }
+            <TrashButton ref = { refDeleteButton }
             onClick = {
                 () => deleteItem(index)
             }
             /> 
 
-            {
-                topping && < Toppings > Добавки: { topping } < /Toppings >} 
+            {topping && < Toppings > Добавки: { topping } </Toppings >} 
 
-                <
-                /OrderItemStyled>
+                </OrderItemStyled>
             )
         };
