@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {formatCurrency} from '../Functions/secondaryFunction';
+import {Context} from '../Functions/context';
 
 const List = styled.ul `
 display: flex;
@@ -42,17 +43,22 @@ z-index: 1;
 }
 `;
 
-export const ListItem = ({itemList, setOpenItem}) => (
-    <List>
-{itemList.map(item => (
-    <Item 
-    key={item.id}
-    img={item.img}
-    onClick={() => setOpenItem(item)}>
-<p>{item.name}</p>
-<p>{formatCurrency(item.price)}</p>
-    </Item>
-))}
+export const ListItem = ({itemList}) => {
 
-    </List>
-);
+    const { openItem: {setOpenItem} } = useContext(Context);
+    
+    return (
+        <List>
+    {itemList.map(item => (
+        <Item 
+        key={item.id}
+        img={item.img}
+        onClick={() => setOpenItem(item)}>
+    <p>{item.name}</p>
+    <p>{formatCurrency(item.price)}</p>
+        </Item>
+    ))}
+    
+        </List>
+    );
+}
